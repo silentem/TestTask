@@ -1,0 +1,42 @@
+# built application files
+*.apk
+# files for the dex VM
+*.dex
+
+# Java class files
+*.class
+
+# generated files
+bin/
+gen/
+build/
+
+# Gradle files
+.gradle/*
+subProjects/facebook/build
+
+# Buck files
+buck-out/
+.buckd/
+
+# Intellij project files
+.idea/
+gen-external-apklibs/
+*.iml
+*.iws
+
+# Local configuration file (sdk path, etc)
+local.properties
+
+# Mac-specific stuff
+.DS_Store
+
+#Maven
+target
+release.properties
+pom.xml.*
+
+#Ant
+build.xml
+ant.properties
+profiles_settings.xml
