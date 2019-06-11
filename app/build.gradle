@@ -4,10 +4,12 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
+apply plugin: 'kotlin-kapt'
+
 android {
     compileSdkVersion 28
     defaultConfig {
-        applicationId "com.whaletail.cleanarchitecturetest"
+        applicationId "com.whaletail.testtask"
         minSdkVersion 23
         targetSdkVersion 28
         versionCode 1
@@ -15,10 +17,19 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        debug {
+            buildConfigField "String", "BASE_URL", "\"https://lupnr1aer6.execute-api.us-east-1.amazonaws.com/prod/newsfeed\""
+            buildConfigField "String", "DB_NAME", "\"test-db\""
         }
+        release {
+            buildConfigField "String", "BASE_URL", "\"https://lupnr1aer6.execute-api.us-east-1.amazonaws.com/prod/newsfeed\""
+            buildConfigField "String", "DB_NAME", "\"test-db\""
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    packagingOptions {
+        exclude 'META-INF/rxjava.properties'
     }
 }
 
@@ -31,4 +42,39 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+    //room
+    implementation 'androidx.room:room-runtime:2.1.0-rc01'
+    kapt "androidx.room:room-compiler:2.1.0-rc01"
+    implementation 'androidx.room:room-rxjava2:2.1.0-rc01'
+    //lifecycle
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel:2.0.0'
+
+    //Dagger 2 dependencies
+    implementation 'com.google.dagger:dagger:2.16'
+    kapt 'com.google.dagger:dagger-compiler:2.16'
+    kapt 'com.google.dagger:dagger-android-processor:2.16'
+    implementation 'com.google.dagger:dagger-android-support:2.16'
+
+    //ok http
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.13.1'
+    implementation 'com.squareup.okhttp3:okhttp:3.13.1'
+    implementation 'com.squareup.okhttp:okhttp:2.7.5'
+    //rx
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.8'
+    implementation 'io.reactivex.rxjava2:rxkotlin:2.3.0'
+    implementation 'org.jetbrains.kotlin:kotlin-reflect:1.3.31'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.5.0'
+    implementation 'com.jakewharton.rxbinding2:rxbinding-support-v4:2.1.1'
+    //picasso
+    implementation 'com.squareup.picasso:picasso:2.71828'
+
+}
+androidExtensions {
+    experimental = true
+}
+kapt {
+    generateStubs = true
 }
