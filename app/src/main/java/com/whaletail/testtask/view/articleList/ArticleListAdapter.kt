@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.whaletail.testtask.R
 import com.whaletail.testtask.base.BaseAdapter
 import com.whaletail.testtask.data.Article
-import com.whaletail.testtask.view.NavigationState
+import com.whaletail.testtask.view.articleDetails.ArticleDetailsFragment
 import kotlinx.android.synthetic.main.fragment_article_list_view_holder.view.*
 
 class ArticleListAdapter(val articleListFragment: ArticleListFragment) :
@@ -40,9 +40,16 @@ class ArticleListAdapter(val articleListFragment: ArticleListFragment) :
             itemView.apply {
                 tvTitle.text = article.title
                 setOnClickListener {
-                    articleListFragment.generalViewModel.navigateTo(NavigationState.ArticleDetails(article))
+                    navigateToDetails(article)
                 }
             }
+        }
+
+        private fun navigateToDetails(article: Article) {
+            articleListFragment.fragmentManager?.beginTransaction()
+                ?.replace(R.id.rootFragmentHolder, ArticleDetailsFragment.newInstance(article))
+                ?.addToBackStack("article_details")
+                ?.commit()
         }
     }
 }

@@ -10,10 +10,7 @@ import com.whaletail.testtask.R
 import com.whaletail.testtask.base.BaseFragment
 import com.whaletail.testtask.getFragmentViewModel
 import com.whaletail.testtask.observe
-import com.whaletail.testtask.view.GeneralViewModel
-import com.whaletail.testtask.withViewModel
 import kotlinx.android.synthetic.main.fragment_article_list.*
-import org.jetbrains.anko.info
 import org.jetbrains.anko.toast
 import javax.inject.Inject
 
@@ -23,7 +20,6 @@ class ArticleListFragment : BaseFragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
     private val articleViewModel by lazy { getFragmentViewModel<ArticleListViewModel>(viewModelFactory) }
-    lateinit var generalViewModel: GeneralViewModel
 
     @Inject
     lateinit var adapter: ArticleListAdapter
@@ -47,9 +43,6 @@ class ArticleListFragment : BaseFragment() {
             }
         }
 
-        withViewModel<GeneralViewModel>(viewModelFactory) {
-            generalViewModel = this
-        }
 
     }
 

@@ -14,35 +14,11 @@ import javax.inject.Inject
 
 class GeneralActivity : BaseActivity() {
 
-
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
-    lateinit var viewModel: GeneralViewModel
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_general)
 
-        withViewModel<GeneralViewModel>(viewModelFactory) {
-            viewModel = this
-            observe(navigation) {
-                when (it) {
-                    is NavigationState.ArticleDetails -> {
-                        navigateToDetails(it.article)
-                    }
-                    is NavigationState.Back -> {
-                        if (supportFragmentManager.backStackEntryCount > 0) {
-                            supportFragmentManager.popBackStack()
-                        }
-                    }
-                }
-            }
-        }
-
         navigateToList()
-
-        toast(supportFragmentManager.backStackEntryCount.toString())
-
     }
 
     private fun navigateToList() {
@@ -51,15 +27,11 @@ class GeneralActivity : BaseActivity() {
             .commit()
     }
 
-    private fun navigateToDetails(article: Article) {
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.rootFragmentHolder, ArticleDetailsFragment.newInstance(article))
-            .addToBackStack("article_details")
-            .commit()
-    }
 
     override fun onBackPressed() {
-        viewModel.navigateTo(NavigationState.Back())
+        if (supportFragmentManager.backStackEntryCount > 0) {
+            supportFragmentManager.popBackStack()
+        }
     }
 
 }
