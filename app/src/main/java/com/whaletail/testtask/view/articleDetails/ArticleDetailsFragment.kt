@@ -7,27 +7,30 @@ import android.view.View
 import android.view.ViewGroup
 import com.whaletail.testtask.R
 import com.whaletail.testtask.base.BaseFragment
+import com.whaletail.testtask.data.Article
+import kotlinx.android.synthetic.main.fragment_article_details.*
 
-private const val ARTICLE_ID = "id"
+private const val ARTICLE = "article"
 
 class ArticleDetailsFragment : BaseFragment() {
-    private val articleId: String?
-        get() = arguments?.getString(ARTICLE_ID)
+    private val article: Article?
+        get() = arguments?.getParcelable(ARTICLE)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_article_details, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
+        tvTitle.text = article?.title
+        tvContent.text = article?.content
     }
 
     companion object {
         @JvmStatic
-        fun newInstance(id: Long) =
+        fun newInstance(article: Article) =
             ArticleDetailsFragment().apply {
                 arguments = Bundle().apply {
-                    putLong(ARTICLE_ID, id)
+                    putParcelable(ARTICLE, article)
                 }
             }
     }

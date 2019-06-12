@@ -25,7 +25,13 @@ class ArticleListViewModel @Inject constructor(
         newsApi.news()
             .runOnIo()
             .printError { articlesLiveData.postValue(NewsResponseState.Error(it.localizedMessage)) }
-            .subscribe { articles -> articlesLiveData.postValue(NewsResponseState.Success(articles?.body ?: emptyList())) }
+            .subscribe { articles ->
+                if (articles.errorMessage == null) {
+                    articlesLiveData.postValue(NewsResponseState.Success(articles?.body ?: emptyList()))
+                } else {
+                    articlesLiveData.postValue(NewsResponseState.Error(articles.errorMessage))
+                }
+            }
             .disposeOnClear()
 
     }

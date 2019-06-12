@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.whaletail.testtask.R
 import com.whaletail.testtask.base.BaseFragment
 import com.whaletail.testtask.observe
+import com.whaletail.testtask.view.GeneralViewModel
 import com.whaletail.testtask.withViewModel
 import kotlinx.android.synthetic.main.fragment_article_list.*
 import org.jetbrains.anko.info
@@ -20,7 +21,8 @@ class ArticleListFragment : BaseFragment() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
-    lateinit var viewModel: ArticleListViewModel
+    lateinit var articleViewModel: ArticleListViewModel
+    lateinit var generalViewModel: GeneralViewModel
 
     @Inject
     lateinit var adapter: ArticleListAdapter
@@ -28,14 +30,17 @@ class ArticleListFragment : BaseFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        withViewModel<GeneralViewModel>(viewModelFactory) {
+            generalViewModel = this
+        }
+
         withViewModel<ArticleListViewModel>(viewModelFactory) {
-            viewModel = this
+            articleViewModel = this
             observe(articlesLiveData) {
                 when (it) {
                     is NewsResponseState.Success -> {
                         srlRoot.isRefreshing = false
                         adapter.articles = it.articles
-                        info { it.articles }
                     }
                     is NewsResponseState.Error -> {
                         srlRoot.isRefreshing = false
@@ -44,7 +49,7 @@ class ArticleListFragment : BaseFragment() {
                 }
             }
             srlRoot.isRefreshing = true
-            viewModel.getNews()
+            articleViewModel.getNews()
         }
 
     }
@@ -55,7 +60,7 @@ class ArticleListFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         rvArticles.adapter = adapter
-        srlRoot.setOnRefreshListener { viewModel.getNews() }
+        srlRoot.setOnRefreshListener { articleViewModel.getNews() }
     }
 
     companion object {

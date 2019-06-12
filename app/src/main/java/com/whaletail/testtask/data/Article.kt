@@ -1,9 +1,12 @@
 package com.whaletail.testtask.data
 
+import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 @Entity
 data class Article(
     @PrimaryKey(autoGenerate = true)
@@ -27,4 +30,4 @@ data class Article(
     var status: String?,
     @SerializedName("content_formatted")
     var contentFormatted: String?
-)
+) : Parcelable

@@ -10,7 +10,9 @@ data class BaseResponse<T>(
     @SerializedName("statusCode")
     var statusCode: String?,
     @SerializedName("headers")
-    var headers: Headers?
+    var headers: Headers?,
+    @SerializedName("errorMessage")
+    var errorMessage: String?
 )
 
 data class Headers(
