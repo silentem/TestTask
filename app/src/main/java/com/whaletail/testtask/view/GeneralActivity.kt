@@ -19,7 +19,7 @@ class GeneralActivity : BaseActivity() {
 
     private fun navigateToList() {
         supportFragmentManager.beginTransaction()
-            .replace(R.id.rootFragmentHolder, ArticleListFragment.newInstance())
+            .replace(R.id.rootFragmentHolder, ArticleListFragment.newInstance(), "article_list")
             .commit()
     }
 
