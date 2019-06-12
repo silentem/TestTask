@@ -39,7 +39,7 @@ class GeneralActivity : BaseActivity() {
 
     private fun navigateToList() {
         supportFragmentManager.beginTransaction()
-            .add(R.id.rootFragmentHolder, ArticleListFragment.newInstance())
+            .replace(R.id.rootFragmentHolder, ArticleListFragment.newInstance())
             .addToBackStack(ArticleListFragment::class.simpleName)
             .commit()
     }
