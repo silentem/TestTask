@@ -1,16 +1,10 @@
 package com.whaletail.testtask.view
 
 import android.os.Bundle
-import androidx.lifecycle.ViewModelProvider
 import com.whaletail.testtask.R
 import com.whaletail.testtask.base.BaseActivity
-import com.whaletail.testtask.data.Article
-import com.whaletail.testtask.observe
-import com.whaletail.testtask.view.articleDetails.ArticleDetailsFragment
 import com.whaletail.testtask.view.articleList.ArticleListFragment
-import com.whaletail.testtask.withViewModel
 import org.jetbrains.anko.toast
-import javax.inject.Inject
 
 class GeneralActivity : BaseActivity() {
 
@@ -18,7 +12,9 @@ class GeneralActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_general)
 
-        navigateToList()
+        if (savedInstanceState == null) {
+            navigateToList()
+        }
     }
 
     private fun navigateToList() {
