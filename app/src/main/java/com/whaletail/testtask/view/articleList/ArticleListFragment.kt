@@ -16,7 +16,6 @@ import javax.inject.Inject
 
 class ArticleListFragment : BaseFragment() {
 
-
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
     private val articleViewModel by lazy { getFragmentViewModel<ArticleListViewModel>(viewModelFactory) }
@@ -62,6 +61,9 @@ class ArticleListFragment : BaseFragment() {
     }
 
     companion object {
+
+        val TAG = ArticleListFragment::class.java.simpleName
+
         @JvmStatic
         fun newInstance() = ArticleListFragment()
     }

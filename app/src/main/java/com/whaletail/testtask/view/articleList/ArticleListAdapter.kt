@@ -46,16 +46,16 @@ class ArticleListAdapter(val articleListFragment: ArticleListFragment) :
         }
 
         private fun navigateToDetails(article: Article) {
-            val fragmentByTag = articleListFragment.fragmentManager?.findFragmentByTag("article_list")
+            val fragmentByTag = articleListFragment.fragmentManager?.findFragmentByTag(ArticleListFragment.TAG)
             fragmentByTag?.let {
                 articleListFragment.fragmentManager?.beginTransaction()
                     ?.hide(it)
                     ?.add(R.id.rootFragmentHolder, ArticleDetailsFragment.newInstance(article))
-                    ?.addToBackStack("article_details")
+                    ?.addToBackStack(ArticleDetailsFragment.TAG)
                     ?.commit()
             } ?: articleListFragment.fragmentManager?.beginTransaction()
                 ?.replace(R.id.rootFragmentHolder, ArticleDetailsFragment.newInstance(article))
-                ?.addToBackStack("article_details")
+                ?.addToBackStack(ArticleDetailsFragment.TAG)
                 ?.commit()
         }
     }

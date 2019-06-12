@@ -9,6 +9,7 @@ import com.squareup.picasso.Picasso
 import com.whaletail.testtask.R
 import com.whaletail.testtask.base.BaseFragment
 import com.whaletail.testtask.data.Article
+import com.whaletail.testtask.view.articleList.ArticleListFragment
 import kotlinx.android.synthetic.main.fragment_article_details.*
 
 private const val ARTICLE = "article"
@@ -30,6 +31,9 @@ class ArticleDetailsFragment : BaseFragment() {
     }
 
     companion object {
+
+        val TAG = ArticleDetailsFragment::class.java.simpleName
+
         @JvmStatic
         fun newInstance(article: Article) =
             ArticleDetailsFragment().apply {
