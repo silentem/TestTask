@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import com.whaletail.testtask.R
 import com.whaletail.testtask.base.BaseFragment
+import com.whaletail.testtask.getFragmentViewModel
 import com.whaletail.testtask.observe
 import com.whaletail.testtask.view.GeneralViewModel
 import com.whaletail.testtask.withViewModel
@@ -21,7 +22,7 @@ class ArticleListFragment : BaseFragment() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
-    lateinit var articleViewModel: ArticleListViewModel
+    val articleViewModel by lazy { getFragmentViewModel<ArticleListViewModel>(viewModelFactory) }
     lateinit var generalViewModel: GeneralViewModel
 
     @Inject
@@ -34,13 +35,18 @@ class ArticleListFragment : BaseFragment() {
             generalViewModel = this
         }
 
-        withViewModel<ArticleListViewModel>(viewModelFactory) {
-            articleViewModel = this
+        articleViewModel?.apply {
             observe(articlesLiveData) {
                 when (it) {
-                    is NewsResponseState.Success -> {
+                    is NewsResponseState.SuccessApi -> {
                         srlRoot.isRefreshing = false
                         adapter.articles = it.articles
+                        info { "Api ${it.articles.size}" }
+                    }
+                    is NewsResponseState.SuccessDb -> {
+                        srlRoot.isRefreshing = false
+                        adapter.articles = it.articles
+                        info { "Db ${it.articles.size}" }
                     }
                     is NewsResponseState.Error -> {
                         srlRoot.isRefreshing = false
@@ -49,7 +55,7 @@ class ArticleListFragment : BaseFragment() {
                 }
             }
             srlRoot.isRefreshing = true
-            articleViewModel.getNews()
+            articleViewModel?.getNews()
         }
 
     }
@@ -60,7 +66,7 @@ class ArticleListFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         rvArticles.adapter = adapter
-        srlRoot.setOnRefreshListener { articleViewModel.getNews() }
+        srlRoot.setOnRefreshListener { articleViewModel?.getNews() }
     }
 
     companion object {

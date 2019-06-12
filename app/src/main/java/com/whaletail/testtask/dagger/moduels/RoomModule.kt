@@ -5,6 +5,8 @@ import androidx.room.Room
 import com.whaletail.testtask.BaseDatabase
 import com.whaletail.testtask.BuildConfig
 import com.whaletail.testtask.dagger.annotations.ApplicationScope
+import com.whaletail.testtask.repositories.ArticlesDao
+import com.whaletail.testtask.repositories.ArticlesRepository
 import dagger.Module
 import dagger.Provides
 
@@ -25,4 +27,12 @@ class RoomModule(application: Application) {
     @ApplicationScope
     @Provides
     fun providesDatabase() = database
+
+    @ApplicationScope
+    @Provides
+    fun providesArticlesDao() = database.getArticlesDao()
+
+    @ApplicationScope
+    @Provides
+    fun providesArticlesRepository(articlesDao: ArticlesDao) = ArticlesRepository(articlesDao)
 }

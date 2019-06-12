@@ -29,3 +29,7 @@ inline fun <reified T : ViewModel> Fragment.withViewModel(viewModelFactory: View
 fun <T : Any, L : LiveData<T>> LifecycleOwner.observe(liveData: L, body: (T?) -> Unit) {
     liveData.observe(this, Observer(body))
 }
+
+inline fun <reified T : ViewModel> Fragment.getFragmentViewModel(viewModelFactory: ViewModelProvider.Factory): T? {
+    return ViewModelProviders.of(this, viewModelFactory)[T::class.java]
+}
