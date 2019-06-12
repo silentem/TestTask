@@ -27,7 +27,9 @@ class ArticleListViewModel @Inject constructor(
 
         articlesRepository.getArticles()
             .flatMap {
-                articlesLiveData.postValue(NewsResponseState.Success(it))
+                if (it.isNotEmpty()) {
+                    articlesLiveData.postValue(NewsResponseState.Success(it))
+                }
                 newsApi.news()
             }
             .doOnSuccess { articlesRepository.updateArticles(it?.body ?: emptyList()) }
