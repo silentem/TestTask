@@ -13,5 +13,5 @@ import dagger.android.ContributesAndroidInjector
 @Module
 abstract class ActivityBuilder {
      @ContributesAndroidInjector(modules = [GeneralActivityModule::class, GeneralFragmentProvider::class])
-    abstract fun bindSplashActivity(): GeneralActivity
+    abstract fun bindGeneralActivity(): GeneralActivity
 }

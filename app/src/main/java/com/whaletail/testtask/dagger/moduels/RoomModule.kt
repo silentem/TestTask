@@ -17,10 +17,7 @@ import dagger.Provides
 @Module
 class RoomModule(application: Application) {
 
-    var database: BaseDatabase = Room.databaseBuilder(
-        application,
-        BaseDatabase::class.java, BuildConfig.DB_NAME
-    )
+    var database: BaseDatabase = Room.databaseBuilder(application, BaseDatabase::class.java, BuildConfig.DB_NAME)
         .fallbackToDestructiveMigration()
         .build()
 
