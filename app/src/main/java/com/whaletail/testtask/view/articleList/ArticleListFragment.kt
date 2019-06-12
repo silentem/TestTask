@@ -43,6 +43,7 @@ class ArticleListFragment : BaseFragment() {
                     }
                 }
             }
+            srlRoot.isRefreshing = true
             viewModel.getNews()
         }
 
