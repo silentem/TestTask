@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.squareup.picasso.Picasso
 import com.whaletail.testtask.R
 import com.whaletail.testtask.base.BaseFragment
 import com.whaletail.testtask.data.Article
@@ -23,6 +24,9 @@ class ArticleDetailsFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         tvTitle.text = article?.title
         tvContent.text = article?.content
+        Picasso.get()
+            .load(article?.imgUrl)
+            .into(ivImage)
     }
 
     companion object {

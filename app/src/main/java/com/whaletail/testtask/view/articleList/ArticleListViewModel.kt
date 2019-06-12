@@ -7,12 +7,12 @@ import com.whaletail.testtask.data.Article
 import com.whaletail.testtask.printError
 import com.whaletail.testtask.repositories.ArticlesRepository
 import com.whaletail.testtask.runOnIo
+import io.reactivex.rxkotlin.subscribeBy
 import javax.inject.Inject
 
 
 sealed class NewsResponseState {
-    data class SuccessApi(val articles: List<Article>) : NewsResponseState()
-    data class SuccessDb(val articles: List<Article>) : NewsResponseState()
+    data class Success(val articles: List<Article>) : NewsResponseState()
     data class Error(val message: String? = null) : NewsResponseState()
 }
 
@@ -27,19 +27,21 @@ class ArticleListViewModel @Inject constructor(
 
         articlesRepository.getArticles()
             .flatMap {
-                articlesLiveData.postValue(NewsResponseState.SuccessDb(it))
+                articlesLiveData.postValue(NewsResponseState.Success(it))
                 newsApi.news()
             }
             .doOnSuccess { articlesRepository.updateArticles(it?.body ?: emptyList()) }
             .runOnIo()
-            .printError { articlesLiveData.postValue(NewsResponseState.Error(it.localizedMessage)) }
-            .subscribe { articles ->
-                if (articles.errorMessage == null) {
-                    articlesLiveData.postValue(NewsResponseState.SuccessApi(articles?.body ?: emptyList()))
-                } else {
-                    articlesLiveData.postValue(NewsResponseState.Error(articles.errorMessage))
-                }
-            }
+            .printError()
+            .subscribeBy(
+                onSuccess = { articles ->
+                    if (articles.errorMessage == null) {
+                        articlesLiveData.postValue(NewsResponseState.Success(articles?.body ?: emptyList()))
+                    } else {
+                        articlesLiveData.postValue(NewsResponseState.Error(articles.errorMessage))
+                    }
+                },
+                onError = { articlesLiveData.postValue(NewsResponseState.Error(it.localizedMessage)) })
             .disposeOnClear()
 
     }

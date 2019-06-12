@@ -22,7 +22,6 @@ class GeneralActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_general)
 
-
         withViewModel<GeneralViewModel>(viewModelFactory) {
             viewModel = this
             observe(navigation) {
@@ -40,7 +39,7 @@ class GeneralActivity : BaseActivity() {
 
     private fun navigateToList() {
         supportFragmentManager.beginTransaction()
-            .replace(R.id.rootFragmentHolder, ArticleListFragment.newInstance())
+            .add(R.id.rootFragmentHolder, ArticleListFragment.newInstance())
             .addToBackStack(ArticleListFragment::class.simpleName)
             .commit()
     }

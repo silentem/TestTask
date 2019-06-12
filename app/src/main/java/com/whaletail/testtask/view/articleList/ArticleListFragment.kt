@@ -22,7 +22,7 @@ class ArticleListFragment : BaseFragment() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
-    val articleViewModel by lazy { getFragmentViewModel<ArticleListViewModel>(viewModelFactory) }
+    private val articleViewModel by lazy { getFragmentViewModel<ArticleListViewModel>(viewModelFactory) }
     lateinit var generalViewModel: GeneralViewModel
 
     @Inject
@@ -31,22 +31,13 @@ class ArticleListFragment : BaseFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        withViewModel<GeneralViewModel>(viewModelFactory) {
-            generalViewModel = this
-        }
 
         articleViewModel?.apply {
             observe(articlesLiveData) {
                 when (it) {
-                    is NewsResponseState.SuccessApi -> {
+                    is NewsResponseState.Success -> {
                         srlRoot.isRefreshing = false
                         adapter.articles = it.articles
-                        info { "Api ${it.articles.size}" }
-                    }
-                    is NewsResponseState.SuccessDb -> {
-                        srlRoot.isRefreshing = false
-                        adapter.articles = it.articles
-                        info { "Db ${it.articles.size}" }
                     }
                     is NewsResponseState.Error -> {
                         srlRoot.isRefreshing = false
@@ -54,8 +45,10 @@ class ArticleListFragment : BaseFragment() {
                     }
                 }
             }
-            srlRoot.isRefreshing = true
-            articleViewModel?.getNews()
+        }
+
+        withViewModel<GeneralViewModel>(viewModelFactory) {
+            generalViewModel = this
         }
 
     }
@@ -66,7 +59,13 @@ class ArticleListFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         rvArticles.adapter = adapter
-        srlRoot.setOnRefreshListener { articleViewModel?.getNews() }
+        srlRoot.setOnRefreshListener { updateArticles() }
+        updateArticles()
+    }
+
+    private fun updateArticles() {
+        srlRoot.isRefreshing = true
+        articleViewModel?.getNews()
     }
 
     companion object {
