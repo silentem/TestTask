@@ -1,5 +1,6 @@
 package com.whaletail.testtask
 
+import com.whaletail.testtask.dagger.DaggerAppComponent
 import com.whaletail.testtask.dagger.moduels.NetworkModule
 import com.whaletail.testtask.dagger.moduels.RoomModule
 import dagger.android.AndroidInjector

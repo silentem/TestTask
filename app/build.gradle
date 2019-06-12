@@ -16,6 +16,10 @@ android {
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+    compileOptions {
+        targetCompatibility = "8"
+        sourceCompatibility = "8"
+    }
     buildTypes {
         debug {
             buildConfigField "String", "BASE_URL", "\"https://lupnr1aer6.execute-api.us-east-1.amazonaws.com/prod/\""
@@ -43,6 +47,7 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    implementation 'com.google.android.material:material:1.1.0-alpha07'
 
 
     implementation 'org.jetbrains.anko:anko-commons:0.10.4'

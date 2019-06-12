@@ -1,8 +1,10 @@
 package com.whaletail.testtask.data
 
+import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
+@Entity
 data class Article(
     @PrimaryKey(autoGenerate = true)
     @SerializedName("id")
