@@ -9,6 +9,7 @@ import com.whaletail.testtask.observe
 import com.whaletail.testtask.view.articleDetails.ArticleDetailsFragment
 import com.whaletail.testtask.view.articleList.ArticleListFragment
 import com.whaletail.testtask.withViewModel
+import org.jetbrains.anko.toast
 import javax.inject.Inject
 
 class GeneralActivity : BaseActivity() {
@@ -29,32 +30,36 @@ class GeneralActivity : BaseActivity() {
                     is NavigationState.ArticleDetails -> {
                         navigateToDetails(it.article)
                     }
+                    is NavigationState.Back -> {
+                        if (supportFragmentManager.backStackEntryCount > 0) {
+                            supportFragmentManager.popBackStack()
+                        }
+                    }
                 }
             }
         }
 
         navigateToList()
 
+        toast(supportFragmentManager.backStackEntryCount.toString())
+
     }
 
     private fun navigateToList() {
         supportFragmentManager.beginTransaction()
             .replace(R.id.rootFragmentHolder, ArticleListFragment.newInstance())
-            .addToBackStack(ArticleListFragment::class.simpleName)
             .commit()
     }
 
     private fun navigateToDetails(article: Article) {
         supportFragmentManager.beginTransaction()
             .replace(R.id.rootFragmentHolder, ArticleDetailsFragment.newInstance(article))
-            .addToBackStack(ArticleDetailsFragment::class.simpleName)
+            .addToBackStack("article_details")
             .commit()
     }
 
     override fun onBackPressed() {
-        if (supportFragmentManager.backStackEntryCount > 1) {
-            supportFragmentManager.popBackStack()
-        }
+        viewModel.navigateTo(NavigationState.Back())
     }
 
 }

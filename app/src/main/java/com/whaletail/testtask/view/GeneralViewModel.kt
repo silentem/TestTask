@@ -7,6 +7,7 @@ import javax.inject.Inject
 
 sealed class NavigationState {
     data class ArticleDetails(val article: Article) : NavigationState()
+    class Back : NavigationState()
 }
 
 class GeneralViewModel @Inject constructor() : BaseViewModel() {
