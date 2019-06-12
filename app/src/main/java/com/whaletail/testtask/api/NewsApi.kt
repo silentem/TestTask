@@ -8,6 +8,6 @@ import retrofit2.http.GET
 interface NewsApi {
 
     @GET("newsfeed")
-    fun orders(): Single<BaseResponse<List<Article>>>
+    fun news(): Single<BaseResponse<List<Article>>>
 
 }

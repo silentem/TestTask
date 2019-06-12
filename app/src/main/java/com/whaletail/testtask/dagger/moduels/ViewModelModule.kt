@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.whaletail.testtask.base.ViewModelFactory
 import com.whaletail.testtask.dagger.annotations.ViewModelKey
 import com.whaletail.testtask.view.GeneralViewModel
+import com.whaletail.testtask.view.articleList.ArticleListViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -15,7 +16,12 @@ abstract class ViewModelModule {
     @Binds
     @IntoMap
     @ViewModelKey(GeneralViewModel::class)
-    abstract fun bindKnowledgeBaseViewModel(viewModel: GeneralViewModel): ViewModel
+    abstract fun bindGeneralViewModel(viewModel: GeneralViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(ArticleListViewModel::class)
+    abstract fun bindArticleListViewModel(viewModel: ArticleListViewModel): ViewModel
 
     @Binds
     abstract fun bindViewModelFactory(viewModelFactory: ViewModelFactory): ViewModelProvider.Factory

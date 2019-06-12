@@ -9,5 +9,5 @@ import retrofit2.Retrofit
 class ApiModule {
 
     @Provides
-    fun providesLoginService(retrofit: Retrofit) = retrofit.create(NewsApi::class.java)
+    fun providesNewsApi(retrofit: Retrofit) = retrofit.create(NewsApi::class.java)
 }
