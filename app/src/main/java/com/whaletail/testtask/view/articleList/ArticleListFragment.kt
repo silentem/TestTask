@@ -8,8 +8,11 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import com.whaletail.testtask.R
 import com.whaletail.testtask.base.BaseFragment
+import com.whaletail.testtask.observe
 import com.whaletail.testtask.withViewModel
 import kotlinx.android.synthetic.main.fragment_article_list.*
+import org.jetbrains.anko.info
+import org.jetbrains.anko.toast
 import javax.inject.Inject
 
 class ArticleListFragment : BaseFragment() {
@@ -27,6 +30,20 @@ class ArticleListFragment : BaseFragment() {
 
         withViewModel<ArticleListViewModel>(viewModelFactory) {
             viewModel = this
+            observe(articlesLiveData) {
+                when (it) {
+                    is NewsResponseState.Success -> {
+                        srlRoot.isRefreshing = false
+                        adapter.articles = it.articles
+                        info { it.articles }
+                    }
+                    is NewsResponseState.Error -> {
+                        srlRoot.isRefreshing = false
+                        context?.toast(it.message ?: getString(R.string.ops_error_occurred))
+                    }
+                }
+            }
+            viewModel.getNews()
         }
 
     }
@@ -37,6 +54,7 @@ class ArticleListFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         rvArticles.adapter = adapter
+        srlRoot.setOnRefreshListener { viewModel.getNews() }
     }
 
     companion object {

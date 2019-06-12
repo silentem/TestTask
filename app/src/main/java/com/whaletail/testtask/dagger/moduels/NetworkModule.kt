@@ -2,6 +2,7 @@ package com.whaletail.testtask.dagger.moduels
 
 import android.content.Context
 import com.google.gson.GsonBuilder
+import com.whaletail.testtask.dagger.annotations.ApplicationScope
 import dagger.Module
 import dagger.Provides
 import okhttp3.Cache
@@ -17,6 +18,7 @@ class NetworkModule(private val baseUrl: String) {
 
     internal val httpLoggingInterceptor: HttpLoggingInterceptor
         @Provides
+        @ApplicationScope
         get() {
             val interceptor = HttpLoggingInterceptor()
             interceptor.level = HttpLoggingInterceptor.Level.BODY
@@ -24,6 +26,7 @@ class NetworkModule(private val baseUrl: String) {
         }
 
     @Provides
+    @ApplicationScope
     internal fun getHttpClient(
         context: Context,
         interceptor: HttpLoggingInterceptor
@@ -38,6 +41,7 @@ class NetworkModule(private val baseUrl: String) {
     }
 
     @Provides
+    @ApplicationScope
     internal fun getRetrofit(client: OkHttpClient, gsonConverterFactory: GsonConverterFactory): Retrofit =
         Retrofit.Builder()
             .baseUrl(baseUrl)
@@ -47,6 +51,7 @@ class NetworkModule(private val baseUrl: String) {
             .build()
 
     @Provides
+    @ApplicationScope
     internal fun getGson(): GsonConverterFactory {
         return GsonConverterFactory
             .create(
