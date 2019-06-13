@@ -1,4 +1,4 @@
-package com.whaletail.testtask.dagger.moduels
+package com.whaletail.testtask.dagger.modules
 
 import com.whaletail.testtask.api.NewsApi
 import com.whaletail.testtask.dagger.annotations.ApplicationScope

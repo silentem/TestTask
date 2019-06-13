@@ -1,4 +1,4 @@
-package com.whaletail.testtask.dagger.moduels
+package com.whaletail.testtask.dagger.modules
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

@@ -1,4 +1,4 @@
-package com.whaletail.testtask.dagger.moduels
+package com.whaletail.testtask.dagger.modules
 
 import android.content.Context
 import com.google.gson.GsonBuilder

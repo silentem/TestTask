@@ -1,11 +1,10 @@
-package com.whaletail.testtask.dagger.moduels
+package com.whaletail.testtask.dagger.modules
 
 import android.app.Application
 import android.content.Context
 import com.whaletail.testtask.dagger.annotations.ApplicationScope
 import dagger.Module
 import dagger.Provides
-import javax.inject.Singleton
 
 @Module
 class AppModule {

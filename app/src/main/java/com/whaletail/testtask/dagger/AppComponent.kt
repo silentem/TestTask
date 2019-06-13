@@ -3,7 +3,7 @@ package com.whaletail.testtask.dagger
 import android.app.Application
 import com.whaletail.testtask.BaseApplication
 import com.whaletail.testtask.dagger.annotations.ApplicationScope
-import com.whaletail.testtask.dagger.moduels.*
+import com.whaletail.testtask.dagger.modules.*
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjector
