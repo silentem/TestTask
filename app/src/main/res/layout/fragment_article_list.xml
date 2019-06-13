@@ -6,6 +6,7 @@
                                                        android:id="@+id/srlRoot"
                                                        android:layout_height="match_parent"
                                                        tools:context=".view.articleDetails.ArticleDetailsFragment">
+
     <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
             tools:listitem="@layout/fragment_article_list_view_holder"

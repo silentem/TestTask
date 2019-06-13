@@ -9,11 +9,13 @@
             android:layout_width="match_parent"
             android:orientation="vertical"
             android:layout_height="wrap_content">
+
         <ImageView
                 android:layout_width="match_parent"
                 android:id="@+id/ivImage"
                 android:layout_height="wrap_content"
                 tools:ignore="ContentDescription"/>
+
         <TextView
                 android:layout_width="match_parent"
                 tools:text="Title"
